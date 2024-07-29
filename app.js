@@ -1,14 +1,11 @@
-// index.js
-// where your node app starts
-
 // init project
-require("dotenv").config();
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
+const parseHeadersRouter = require("./routes/parseHeadersRoutes");
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC
-var cors = require("cors");
+const cors = require("cors");
 app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 204
 
 // http://expressjs.com/en/starter/static-files.html
@@ -20,17 +17,6 @@ app.get("/", function (req, res) {
 });
 
 // your first API endpoint...
-app.get("/api/whoami", (req, res) => {
-  console.log(req.headers);
-  const ipaddress = req.ip;
-  const language = req.headers["accept-language"];
-  const software = req.headers["user-agent"];
-
-  res.json({
-    ipaddress,
-    language,
-    software,
-  });
-});
+app.use("/api", parseHeadersRouter);
 
 module.exports = app;
