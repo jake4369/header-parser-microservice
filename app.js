@@ -24,10 +24,12 @@ app.get("/api/whoami", (req, res) => {
   console.log(req.headers);
   const ipaddress = req.ip;
   const language = req.headers["accept-language"];
+  const software = req.headers["user-agent"];
 
   res.json({
     ipaddress,
     language,
+    software,
   });
 });
 
